@@ -124,7 +124,14 @@ class NavigationBuilder
             $this->addItem($this->root, $item);
         }
 
-        foreach ($this->root->getChildren() as $item) {
+        $children = $this->root->getChildren();
+
+        if (false === empty($children)) {
+            uasort($children, [$this, 'ascending']);
+            $this->root->setChildren($children);
+        }
+
+        foreach ($children as $item) {
             $this->reorder($item);
         }
     }
